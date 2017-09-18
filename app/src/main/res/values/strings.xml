@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ShopList</string>
+    <string name="or">or</string>
+    <string name="CreateNewList">Create New List</string>
+    <string name="LoadPreviousList">Load Previous List</string>
+    <string name="Welcome">Welcome to Your ShopList!</string>
+    <string name="SelectProduct">Or select products:</string>
+    <string name="AddProduct">Add a new product (Press Enter to add product to the list)</string>
+    <string name="addNewProdEdit">Add a new product here</string>
+    <string name="CreateList">Create List</string>
+    <string name="ListViewId">listView</string>
+    <string name="DialogTitle">Closing the ShopList</string>
+    <string name="DialogText">Would you like to save current ShopList?</string>
+    <string name="PositiveButton">Yes</string>
+    <string name="NegativeButton">No</string>
+    <string name="NewShopListName">New ShopList Name</string>
+    <string name="EnterNewShopListName">Enter New ShopList Name</string>
+    <string name="Ok">OK</string>
+    <string name="Cancel">Cancel</string>
+</resources>

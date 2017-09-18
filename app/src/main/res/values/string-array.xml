@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="supArray">
+        <item>Water</item>
+        <item>Beer</item>
+        <item>Milk</item>
+        <item>Sour Cream</item>
+        <item>Eggs</item>
+        <item>Banana</item>
+        <item>Apple</item>
+        <item>Orange</item>
+        <item>Bread</item>
+        <item>Salt</item>
+        <item>Pepper</item>
+    </string-array>
+</resources>
