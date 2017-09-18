@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class CreateListActivity extends AppCompatActivity {
 
-    public final int PARENT_ACTIVITY_ID = 1;
+    public static final int PARENT_ACTIVITY_ID = 1;
     protected ArrayAdapter<String> mAdapter;
-    public ArrayList<String> shopList = new ArrayList<String>();
+    public ArrayList<String> shopList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,9 +28,8 @@ public class CreateListActivity extends AppCompatActivity {
         final EditText editText = (EditText) findViewById(R.id.editNewProd) ;
         String[] supArray = getResources().getStringArray(R.array.supArray);
 
-        final ArrayList<String> prodList = new ArrayList<String>();
-        for (int i=0; i<supArray.length; i++)
-        {
+        ArrayList<String> prodList = new ArrayList<String>();
+        for (int i = 0; i < supArray.length; i++) {
             prodList.add(supArray[i]);
         }
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, prodList);
@@ -58,18 +57,19 @@ public class CreateListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 SparseBooleanArray chosen = listView.getCheckedItemPositions();
-                for (int i=0; i<chosen.size(); i++) {
+                for (int i = 0; i < chosen.size(); i++) {
                     if (chosen.valueAt(i)) {
                         String pos = listView.getAdapter().getItem(chosen.keyAt(i)).toString();
-                        int count=0;
+                        int count = 0;
                         for (int j = 0; j < shopList.size(); j++) {
                             if (pos.equals(shopList.get(j))) {
                                 count++;
                                 break;
                             }
                         }
-                            if (count==0)
-                            shopList.add(pos);
+                            if (count == 0) {
+                                shopList.add(pos);
+                            }
                     }
                 }
             }
@@ -77,9 +77,9 @@ public class CreateListActivity extends AppCompatActivity {
     }
 
     public void onCreateListClick(View view) {
-        Intent intent = new Intent(CreateListActivity.this, ShopListActivity.class);
-        intent.putExtra("shopArrayList", shopList);
-        intent.putExtra("Parent_activity_id", PARENT_ACTIVITY_ID);
-        startActivity(intent);
+        Intent intentCreateToShop = new Intent(CreateListActivity.this, ShopListActivity.class);
+        intentCreateToShop.putExtra("shopArrayList", shopList);
+        intentCreateToShop.putExtra("Parent_activity_id", PARENT_ACTIVITY_ID);
+        startActivity(intentCreateToShop);
     }
 }

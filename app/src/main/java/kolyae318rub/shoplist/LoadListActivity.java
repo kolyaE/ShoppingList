@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class LoadListActivity extends ListActivity {
 
-    protected ArrayList<String> loadList;
-    public final int PARENT_ACTIVITY_ID = 2;
+    ArrayList<String> loadList;
+    public static final int PARENT_ACTIVITY_ID = 2;
     public static ArrayList<String> listOfLists;
 
     @Override
@@ -46,9 +46,9 @@ public class LoadListActivity extends ListActivity {
         }
         cursor.close();
 
-        Intent intent = new Intent(this, ShopListActivity.class);
-        intent.putExtra("savedArrayList", loadList);
-        intent.putExtra("Parent_activity_id", PARENT_ACTIVITY_ID);
-        startActivity(intent);
+        Intent intentToShop = new Intent(this, ShopListActivity.class);
+        intentToShop.putExtra("savedArrayList", loadList);
+        intentToShop.putExtra("Parent_activity_id", PARENT_ACTIVITY_ID);
+        startActivity(intentToShop);
     }
 }

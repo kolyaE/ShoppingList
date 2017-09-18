@@ -44,11 +44,8 @@ public class ShopListActivity extends AppCompatActivity {
                     listView.setItemChecked(position, false);
                 }
 
-              //Dino debugged this
-                //  SparseBooleanArray chosen = listView.getCheckedItemPositions();
-
                 if (listView.getCheckedItemCount() == shopList.size()) {
-                    Toast.makeText(getApplicationContext(), "You've bought everything from your shoplist!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.Everything, Toast.LENGTH_LONG).show();
                 }
             }
         });

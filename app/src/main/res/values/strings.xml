@@ -17,4 +17,5 @@
     <string name="EnterNewShopListName">Enter New ShopList Name</string>
     <string name="Ok">OK</string>
     <string name="Cancel">Cancel</string>
+    <string name="Everything">You have bought everything from your shoplist!</string>
 </resources>

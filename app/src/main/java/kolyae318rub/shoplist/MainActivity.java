@@ -17,13 +17,13 @@ public class MainActivity extends AppCompatActivity
 
     public void onLoadPreviousListButtonClick(View view)
     {
-        Intent intent = new Intent(MainActivity.this, LoadListActivity.class);
-        startActivity(intent);
+        Intent intentMainToLoad = new Intent(MainActivity.this, LoadListActivity.class);
+        startActivity(intentMainToLoad);
     }
 
     public void onCreateNewListButtonClick(View view)
     {
-        Intent intent = new Intent(MainActivity.this, CreateListActivity.class);
-        startActivity(intent);
+        Intent intentMainToCreate = new Intent(MainActivity.this, CreateListActivity.class);
+        startActivity(intentMainToCreate);
     }
 }

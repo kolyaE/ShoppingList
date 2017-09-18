@@ -19,7 +19,7 @@ public class SaveNameDialog extends DialogFragment {
                 .setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!newShopListName.getText().toString().equals("")) {
+                        if (!newShopListName.getText().toString().isEmpty()) {
                             slName = newShopListName.getText().toString();
                             ((ShopListActivity) getActivity()).savingList();
                             getActivity().finish();
