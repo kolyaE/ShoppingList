@@ -12,5 +12,16 @@
         <item>Bread</item>
         <item>Salt</item>
         <item>Pepper</item>
+        <item>Cookies</item>
+        <item>Pineapple</item>
+        <item>Cheese</item>
+        <item>Lemon</item>
+        <item>Tea</item>
+        <item>Coffee</item>
+        <item>Ham</item>
+        <item>Fish</item>
+        <item>Oil</item>
+        <item>Strawberry</item>
+        <item>Watermelon</item>
     </string-array>
 </resources>

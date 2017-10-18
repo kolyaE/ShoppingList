@@ -5,45 +5,62 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateListActivity extends AppCompatActivity {
 
-    public static final int PARENT_ACTIVITY_ID = 1;
-    protected ArrayAdapter<String> mAdapter;
+    public static final int FROM_CREATE_LIST_ACTIVITY = 1;
+    final String ATTRIBUTE_IMAGE = "image";
+    final String ATTRIBUTE_ITEM = "item";
     public ArrayList<String> shopList = new ArrayList<>();
+    ListView listView;
+    SimpleAdapter mAdapter;
+    EditText editText;
+    Map<String, Object> map;
+    ArrayList<Map<String, Object>> data;
+    int checkedGrey, checkedGreen;
+    int checkedCount;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list);
-        final ListView listView = (ListView) findViewById(R.id.listView);
-        final EditText editText = (EditText) findViewById(R.id.editNewProd) ;
-        String[] supArray = getResources().getStringArray(R.array.supArray);
+        final String ATTRIBUTE_IMAGE = "image";
+        final String ATTRIBUTE_ITEM = "item";
+        listView = (ListView) findViewById(R.id.listView);
+        editText = (EditText) findViewById(R.id.editNewProd);
+        checkedCount = 0;
 
-        ArrayList<String> prodList = new ArrayList<String>();
+        String[] supArray = getResources().getStringArray(R.array.supArray);
+        checkedGrey = R.drawable.ic_cheked;
+        checkedGreen = R.drawable.ic_checked_green;
+        data = new ArrayList<>(supArray.length);
+
         for (int i = 0; i < supArray.length; i++) {
-            prodList.add(supArray[i]);
+            addItem(supArray[i], checkedGrey);
+            data.add(map);
         }
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, prodList);
+
+        mAdapter = new SimpleAdapter(this, data, R.layout.prod_item, new String[] { ATTRIBUTE_IMAGE, ATTRIBUTE_ITEM },
+                new int[] { R.id.checked, R.id.prodListItem });
         listView.setAdapter(mAdapter);
 
-        //Adding products by Enter press
+        //Add Item by Enter press
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        shopList.add(editText.getText().toString());
-                        mAdapter.notifyDataSetChanged();
-                        editText.setText("");
+                        addClick(checkedGreen);
                         return true;
                     }
                 }
@@ -58,28 +75,81 @@ public class CreateListActivity extends AppCompatActivity {
 
                 SparseBooleanArray chosen = listView.getCheckedItemPositions();
                 for (int i = 0; i < chosen.size(); i++) {
-                    if (chosen.valueAt(i)) {
-                        String pos = listView.getAdapter().getItem(chosen.keyAt(i)).toString();
-                        int count = 0;
-                        for (int j = 0; j < shopList.size(); j++) {
-                            if (pos.equals(shopList.get(j))) {
-                                count++;
-                                break;
-                            }
+                    if (listView.getAdapter().getItem(chosen.keyAt(i)).toString().equals(listView.getItemAtPosition(position).toString())) {
+                        String checkedItem = data.get(position).get("item").toString();
+                        data.remove(position);
+                        map = new HashMap<>();
+                        map.put(ATTRIBUTE_ITEM, checkedItem);
+                        if (chosen.valueAt(i)) {
+                            map.put(ATTRIBUTE_IMAGE, checkedGreen);
+                            data.add(0, map);
+                            listView.setItemChecked(position, false);
+                            listView.setItemChecked(checkedCount, true);
+                            checkedCount++;
                         }
-                            if (count == 0) {
-                                shopList.add(pos);
+                        else {
+                            map.put(ATTRIBUTE_IMAGE, checkedGrey);
+                            data.add(checkedCount, map);
+                            if (position+1 != checkedCount) {
+                                listView.setItemChecked(position, true);
+                                listView.setItemChecked(checkedCount-1, false);
                             }
+                            checkedCount--;
+                        }
+                        break;
                     }
                 }
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
 
-    public void onCreateListClick(View view) {
-        Intent intentCreateToShop = new Intent(CreateListActivity.this, ShopListActivity.class);
-        intentCreateToShop.putExtra("shopArrayList", shopList);
-        intentCreateToShop.putExtra("Parent_activity_id", PARENT_ACTIVITY_ID);
-        startActivity(intentCreateToShop);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_create_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.DoneList:
+                SparseBooleanArray chosen = listView.getCheckedItemPositions();
+                for (int i = 0; i < chosen.size(); i++) {
+                    if (chosen.valueAt(i)) {
+                        shopList.add(data.get(chosen.keyAt(i)).get("item").toString());
+                    }
+                }
+                Intent intentCreateToShop = new Intent(CreateListActivity.this, ShopListActivity.class);
+                intentCreateToShop.putExtra("shopArrayList", shopList);
+                intentCreateToShop.putExtra("Parent_activity_id", FROM_CREATE_LIST_ACTIVITY);
+                startActivity(intentCreateToShop);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onAddClick(View view) {
+        addClick(checkedGreen);
+    }
+
+    public void addItem(String item, int checkedColor) {
+        map = new HashMap<>();
+        map.put(ATTRIBUTE_ITEM, item);
+        map.put(ATTRIBUTE_IMAGE, checkedColor);
+    }
+
+    public void addClick(int checkedColor) {
+        String text = editText.getText().toString();
+        if (!text.isEmpty()) {
+            addItem(text, checkedColor);
+            data.add(0, map);
+            listView.setItemChecked(0, true);
+            checkedCount++;
+            listView.setItemChecked(checkedCount - 1, true);
+            mAdapter.notifyDataSetChanged();
+            editText.setText("");
+        }
     }
 }

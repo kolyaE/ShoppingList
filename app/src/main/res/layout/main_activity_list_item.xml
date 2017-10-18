@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/row_main"
+    android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/listName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/list_padding"
+            android:textSize="@dimen/main_list_text_size"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/list_padding"
+            android:paddingRight="@dimen/list_padding"
+            android:textSize="@dimen/list_text_size"/>
+
+</LinearLayout>
